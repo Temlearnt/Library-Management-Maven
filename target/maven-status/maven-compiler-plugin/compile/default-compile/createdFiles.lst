@@ -1,3 +1,4 @@
+com\sprinkle\views\FormEditLoans.class
 com\sprinkle\views\LoansData$4.class
 com\sprinkle\dao\LoanDAO.class
 com\sprinkle\views\LoginForm.class
@@ -8,12 +9,14 @@ com\sprinkle\controllers\LoanController.class
 com\sprinkle\views\HomeMember$1.class
 com\sprinkle\views\LoansData$3.class
 com\sprinkle\Main.class
+com\sprinkle\views\FormEditLoans$1.class
 com\sprinkle\models\UserModel.class
 com\sprinkle\controllers\DashboardController.class
 com\sprinkle\utils\JOptionPaneUtils.class
 com\sprinkle\dao\DashboardDAO.class
 com\sprinkle\models\LoanModel.class
 com\sprinkle\views\LoginForm$1.class
+com\sprinkle\views\LoansData$5.class
 com\sprinkle\views\DashboardAdmin$3.class
 com\sprinkle\controllers\AuthController.class
 com\sprinkle\views\LoansData$1.class

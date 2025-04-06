@@ -74,7 +74,7 @@ public LoansData() {
     
     
     
-    jButton1.addActionListener(e -> loadLoansData());
+//    jButton1.addActionListener(e -> loadLoansData());
     
     jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
         public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -196,12 +196,12 @@ public LoansData() {
         jTable1.setRowHeight(50);
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 157, 705, 384));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 157, 1050, 384));
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 74, 173));
         jLabel2.setText("© 2025 Sprinkle Library. All Rights Reserved.");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 559, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 560, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Yu Gothic UI", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 74, 173));
@@ -213,7 +213,12 @@ public LoansData() {
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/editing.png"))); // NOI18N
         jButton1.setText("UPDATE");
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(593, 90, 130, 40));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 90, 130, 40));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +227,7 @@ public LoansData() {
         });
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 470, 40));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 740, 610));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 1090, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -231,43 +236,20 @@ public LoansData() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-        private void searchLoansData(String keyword) {
-        LoanController loanController = new LoanController();
-        List<LoanModel> loans = loanController.getAllLoansBooks();
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        updateSelectedLoanStatus();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        // Jika pencarian kosong, langsung tampilkan semua data
-        if (keyword.trim().isEmpty()) {
-            loadLoansData();
-            return;
-        }
-
-        String[] columnNames = {"Loan ID", "Member Name", "Book Title", "Category", "Admin", "Loan Date", "Return Date"};
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-
-        for (LoanModel loan : loans) {
-            if (loan.getMemberName().toLowerCase().contains(keyword.toLowerCase()) ||
-                loan.getBookTitle().toLowerCase().contains(keyword.toLowerCase())) {
-                Object[] rowData = {
-                    loan.getLoanId(),
-                    loan.getMemberName(),
-                    loan.getBookTitle(),
-                    loan.getCategoryName(),
-                    loan.getAdminName(),
-                    loan.getLoanDate(),
-                    loan.getReturnDate()
-                };
-                model.addRow(rowData);
-            }
-        }
-
-        jTable1.setModel(model);
-    }
-
-     private void loadLoansData() {
+      private void searchLoansData(String keyword) {
     LoanController loanController = new LoanController();
-    List<LoanModel> loans = loanController.getAllLoansBooks();
+    List<LoanModel> loans = loanController.searchLoans(keyword);
 
-    String[] columnNames = {"Loan ID", "Member Name", "Book Title", "Category", "Admin", "Loan Date", "Return Date"};
+    String[] columnNames = {
+        "Loan ID", "Member Name", "Book Title", "Category", "Admin",
+        "Loan Date", "Return Date", "Due Date", "Fine", "Status"
+    };
+
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
     for (LoanModel loan : loans) {
@@ -278,13 +260,84 @@ public LoansData() {
             loan.getCategoryName(),
             loan.getAdminName(),
             loan.getLoanDate(),
-            loan.getReturnDate()
+            loan.getReturnDate(),
+            loan.getDueDate(),
+            loan.getFineAmount(),
+            loan.getStatus()
         };
         model.addRow(rowData);
     }
 
     jTable1.setModel(model);
 }
+
+
+
+    private void loadLoansData() {
+    LoanController loanController = new LoanController();
+    List<LoanModel> loans = loanController.getAllLoansBooks();
+
+    String[] columnNames = {
+        "Loan ID", "Member Name", "Book Title", "Category", "Admin",
+        "Loan Date", "Return Date", "Due Date", "Fine", "Status"
+    };
+
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+    for (LoanModel loan : loans) {
+        Object[] rowData = {
+            loan.getLoanId(),
+            loan.getMemberName(),
+            loan.getBookTitle(),
+            loan.getCategoryName(),
+            loan.getAdminName(),
+            loan.getLoanDate(),
+            loan.getReturnDate(),
+            loan.getDueDate(),
+            loan.getFineAmount(),
+            loan.getStatus()
+        };
+        model.addRow(rowData);
+    }
+
+    jTable1.setModel(model);
+}
+    
+private void updateSelectedLoanStatus() {
+    int selectedRow = jTable1.getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a loan record first.");
+        return;
+    }
+
+    int loanId = (int) jTable1.getValueAt(selectedRow, 0); // Kolom 0 = Loan ID
+    String currentStatus = (String) jTable1.getValueAt(selectedRow, 9); // Kolom 9 = Status
+
+    String[] statusOptions = {"Borrowed", "Returned", "Overdue"};
+    String newStatus = (String) JOptionPane.showInputDialog(
+        this,
+        "Update Loan Status:",
+        "Edit Status",
+        JOptionPane.PLAIN_MESSAGE,
+        null,
+        statusOptions,
+        currentStatus
+    );
+
+    if (newStatus != null && !newStatus.equals(currentStatus)) {
+        LoanController controller = new LoanController();
+        boolean success = controller.updateLoanStatus(loanId, newStatus);
+
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Loan status updated successfully.");
+            loadLoansData(); // Refresh tabel
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update loan status.");
+        }
+    }
+}
+
 
 
     

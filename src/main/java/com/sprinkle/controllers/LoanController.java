@@ -15,13 +15,17 @@ public class LoanController {
     public List<LoanModel> getRecentReturnedBooks() {
         return loanDAO.getRecentReturnedBooks();
     }
-    
+
     public List<LoanModel> getAllLoansBooks() {
-        return loanDAO.getAllLoansBooks(); // Perbaikan pemanggilan metode yang benar
+        return loanDAO.getAllLoansBooks();
     }
 
-    public List<LoanModel> searchLoans(String category, String keyword) {
-    return loanDAO.searchLoans(category, keyword);
+    public List<LoanModel> searchLoans(String keyword) {
+        return loanDAO.searchLoans(keyword);
+    }
+    
+    public boolean updateLoanStatus(int loanId, String newStatus) {
+    return new LoanDAO().updateStatus(loanId, newStatus);
 }
 
 }

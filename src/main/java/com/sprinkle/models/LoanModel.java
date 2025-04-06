@@ -1,6 +1,7 @@
 package com.sprinkle.models;
 
 import java.sql.Date;
+import java.math.BigDecimal;
 
 public class LoanModel {
     private int loanId;
@@ -12,9 +13,13 @@ public class LoanModel {
     private String adminName;
     private Date loanDate;
     private Date returnDate;
+    private Date dueDate;
+    private BigDecimal fineAmount;
+    private String status;
 
-    // Konstruktor dengan parameter sesuai dengan LoanDAO
-    public LoanModel(int loanId, int memberId, String memberName, int bookId, String bookTitle, String categoryName, String adminName, Date loanDate, Date returnDate) {
+    public LoanModel(int loanId, int memberId, String memberName, int bookId, String bookTitle,
+                     String categoryName, String adminName, Date loanDate, Date returnDate,
+                     Date dueDate, BigDecimal fineAmount, String status) {
         this.loanId = loanId;
         this.memberId = memberId;
         this.memberName = memberName;
@@ -24,9 +29,12 @@ public class LoanModel {
         this.adminName = adminName;
         this.loanDate = loanDate;
         this.returnDate = returnDate;
+        this.dueDate = dueDate;
+        this.fineAmount = fineAmount;
+        this.status = status;
     }
 
-    // Getter dan Setter
+    // Getters & Setters
     public int getLoanId() { return loanId; }
     public void setLoanId(int loanId) { this.loanId = loanId; }
 
@@ -53,4 +61,13 @@ public class LoanModel {
 
     public Date getReturnDate() { return returnDate; }
     public void setReturnDate(Date returnDate) { this.returnDate = returnDate; }
+
+    public Date getDueDate() { return dueDate; }
+    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+
+    public BigDecimal getFineAmount() { return fineAmount; }
+    public void setFineAmount(BigDecimal fineAmount) { this.fineAmount = fineAmount; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
