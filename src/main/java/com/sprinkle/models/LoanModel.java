@@ -10,6 +10,7 @@ public class LoanModel {
     private int bookId;
     private String bookTitle;
     private String categoryName;
+    private int adminId; // ✅ DITAMBAHKAN
     private String adminName;
     private Date loanDate;
     private Date returnDate;
@@ -17,6 +18,7 @@ public class LoanModel {
     private BigDecimal fineAmount;
     private String status;
 
+    // ✅ Constructor lengkap (untuk JOIN/view)
     public LoanModel(int loanId, int memberId, String memberName, int bookId, String bookTitle,
                      String categoryName, String adminName, Date loanDate, Date returnDate,
                      Date dueDate, BigDecimal fineAmount, String status) {
@@ -33,8 +35,23 @@ public class LoanModel {
         this.fineAmount = fineAmount;
         this.status = status;
     }
+    
+    // Constructor ringkas untuk edit form atau dummy data
+    public LoanModel(int loanId, int memberId, int adminId, int bookId, Date loanDate, Date dueDate, String status) {
+        this.loanId = loanId;
+        this.memberId = memberId;
+        this.adminId = adminId;
+        this.bookId = bookId;
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
 
-    // Getters & Setters
+
+    // ✅ Constructor kosong (fleksibel buat setter)
+    public LoanModel() {}
+
+    // ✅ Getter & Setter
     public int getLoanId() { return loanId; }
     public void setLoanId(int loanId) { this.loanId = loanId; }
 
@@ -52,6 +69,9 @@ public class LoanModel {
 
     public String getCategoryName() { return categoryName; }
     public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public int getAdminId() { return adminId; } // ✅
+    public void setAdminId(int adminId) { this.adminId = adminId; } // ✅
 
     public String getAdminName() { return adminName; }
     public void setAdminName(String adminName) { this.adminName = adminName; }

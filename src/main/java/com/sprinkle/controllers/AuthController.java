@@ -1,27 +1,26 @@
 package com.sprinkle.controllers;
 
-import com.sprinkle.models.UserModel;
-import com.sprinkle.views.LoginForm;
+import com.sprinkle.dao.AuthDAO;
 import com.sprinkle.views.DashboardAdmin;
-import com.sprinkle.views.HomeMember;
-import javax.swing.JOptionPane;
+import com.sprinkle.views.DashboardStaff;
+import com.sprinkle.views.LoginForm;
+
+import javax.swing.*;
 
 public class AuthController {
-    private UserModel userModel;
-
-    public AuthController() {
-        userModel = new UserModel();
-    }
+    private AuthDAO authDAO = new AuthDAO();
 
     public void login(String username, String password, LoginForm loginForm) {
-        if (userModel.authenticateAdmin(username, password)) {
-            JOptionPane.showMessageDialog(null, "Login berhasil sebagai Admin!");
-            new DashboardAdmin().setVisible(true);
-            loginForm.dispose(); // Tutup form login setelah berhasil
-        } else if (userModel.authenticateMember(username, password)) {
-            JOptionPane.showMessageDialog(null, "Login berhasil sebagai Member!");
-            new HomeMember().setVisible(true);
-            loginForm.dispose(); // Tutup form login setelah berhasil
+        String role = authDAO.authenticateAndGetRole(username, password);
+        if (role != null) {
+            if (role.equalsIgnoreCase("admin")) {
+                JOptionPane.showMessageDialog(null, "Login berhasil sebagai Admin!");
+                new DashboardAdmin().setVisible(true);
+            } else if (role.equalsIgnoreCase("staff")) {
+                JOptionPane.showMessageDialog(null, "Login berhasil sebagai Staff!");
+                new DashboardStaff().setVisible(true);
+            }
+            loginForm.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Login gagal! Periksa username dan password.");
         }

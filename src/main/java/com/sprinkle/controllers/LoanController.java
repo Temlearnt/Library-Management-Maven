@@ -24,8 +24,19 @@ public class LoanController {
         return loanDAO.searchLoans(keyword);
     }
     
-    public boolean updateLoanStatus(int loanId, String newStatus) {
-    return new LoanDAO().updateStatus(loanId, newStatus);
-}
+    // ✅ Tambah pinjaman baru
+    public boolean addLoan(LoanModel loan) {
+        return loanDAO.addLoan(loan);
+    }
 
+    
+      // ✅ Update pinjaman (harus isi semua data)
+    public boolean updateLoan(LoanModel loan) {
+        return loanDAO.updateLoan(loan);
+    }
+
+    // ✅ Hapus pinjaman
+    public boolean deleteLoan(int loanId) {
+        return loanDAO.deleteLoan(loanId);
+    }
 }

@@ -7,6 +7,7 @@ import com.sprinkle.controllers.DashboardController;
 import com.sprinkle.controllers.LoanController;
 import com.sprinkle.models.LoanModel;
 import java.awt.Color;
+import java.sql.Date;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
  */
 public class LoansData extends javax.swing.JFrame {
     private DefaultTableModel tableModel; // Model untuk tabel
-
+    private List<LoanModel> currentLoans;
+    private LoanController loanController = new LoanController();
     /**
      * Creates new form DashboardAdmin
      */
@@ -73,7 +75,6 @@ public LoansData() {
         loadLoansData(); // Menampilkan data sebelum pencarian
     
     
-    
 //    jButton1.addActionListener(e -> loadLoansData());
     
     jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -82,9 +83,6 @@ public LoansData() {
         }
     });
 }
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -98,9 +96,10 @@ public LoansData() {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -108,6 +107,9 @@ public LoansData() {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -125,26 +127,47 @@ public LoansData() {
         jButton2.setText("Dashboard");
         jButton2.setBorder(null);
 
-        jButton4.setBackground(new java.awt.Color(0, 74, 173));
-        jButton4.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/group.png"))); // NOI18N
-        jButton4.setText("User Data");
-        jButton4.setBorder(null);
-
-        jButton5.setBackground(new java.awt.Color(0, 74, 173));
-        jButton5.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/open-book (1).png"))); // NOI18N
-        jButton5.setText("Book Data");
-        jButton5.setBorder(null);
-
         jButton6.setBackground(new java.awt.Color(0, 74, 173));
         jButton6.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/borrow.png"))); // NOI18N
-        jButton6.setText("Borrow Books");
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/book (2).png"))); // NOI18N
+        jButton6.setText("Loans Data");
         jButton6.setBorder(null);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setBackground(new java.awt.Color(0, 74, 173));
+        jButton4.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/tag.png"))); // NOI18N
+        jButton4.setText("Categories Data");
+        jButton4.setBorder(null);
+
+        jButton7.setBackground(new java.awt.Color(0, 74, 173));
+        jButton7.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/open-book (1).png"))); // NOI18N
+        jButton7.setText("Books Data");
+        jButton7.setBorder(null);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setBackground(new java.awt.Color(255, 51, 51));
+        jButton9.setFont(new java.awt.Font("Yu Gothic UI", 1, 12)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/logout.png"))); // NOI18N
+        jButton9.setText("Log Out");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -154,30 +177,37 @@ public LoansData() {
                 .addComponent(jLabel1)
                 .addGap(0, 1, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
+                        .addComponent(jButton9)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 149, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                .addComponent(jButton9)
+                .addGap(47, 47, 47))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 610));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -208,7 +238,7 @@ public LoansData() {
         jLabel3.setText("Loans Data");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 27, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 213, 73));
+        jButton1.setBackground(new java.awt.Color(0, 0, 255));
         jButton1.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/editing.png"))); // NOI18N
@@ -218,7 +248,7 @@ public LoansData() {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 90, 130, 40));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 90, 130, 40));
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,6 +256,42 @@ public LoansData() {
             }
         });
         jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 470, 40));
+
+        jButton3.setBackground(new java.awt.Color(0, 0, 0));
+        jButton3.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/refresh-page-option.png"))); // NOI18N
+        jButton3.setText("REFRESH");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 140, 40));
+
+        jButton8.setBackground(new java.awt.Color(0, 204, 0));
+        jButton8.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/add.png"))); // NOI18N
+        jButton8.setText("ADD");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 90, 130, 40));
+
+        jButton5.setBackground(new java.awt.Color(255, 51, 51));
+        jButton5.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/bin.png"))); // NOI18N
+        jButton5.setText("DELETE");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 90, 130, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 1090, 610));
 
@@ -237,11 +303,82 @@ public LoansData() {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        updateSelectedLoanStatus();
+       int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a loan to edit.");
+            return;
+        }
+
+        LoanModel loan = currentLoans.get(selectedRow); // ✅ ambil data asli dari list
+
+        EditLoanForm dialog = new EditLoanForm(this, true, loan);
+        dialog.setVisible(true);
+        loadLoansData(); // Refresh setelah edit
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-      private void searchLoansData(String keyword) {
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        // Pindah ke halaman LoanData
+        LoansData loanData = new LoansData();
+        loanData.setVisible(true);
+
+        // Menutup halaman saat ini (opsional)
+        dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        loadLoansData();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        AddLoanForm form = new AddLoanForm(this, true);
+        form.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        // Delete button action
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a loan to delete.");
+            return;
+        }
+        //        int loanId = (int) jTable1.getValueAt(selectedRow, 0);
+
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to delete this loan?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int loanId = (int) jTable1.getValueAt(selectedRow, 0);
+            LoanController loanController = new LoanController();
+            boolean success = loanController.deleteLoan(loanId);
+            if (success) {
+                JOptionPane.showMessageDialog(this, "Loan deleted successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete loan.");
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            dispose(); // Tutup dashboard
+            new LoginForm().setVisible(true); // Kembali ke halaman login
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void searchLoansData(String keyword) {
     LoanController loanController = new LoanController();
     List<LoanModel> loans = loanController.searchLoans(keyword);
 
@@ -274,8 +411,7 @@ public LoansData() {
 
 
     private void loadLoansData() {
-    LoanController loanController = new LoanController();
-    List<LoanModel> loans = loanController.getAllLoansBooks();
+    currentLoans = loanController.getAllLoansBooks(); // Simpan objek asli
 
     String[] columnNames = {
         "Loan ID", "Member Name", "Book Title", "Category", "Admin",
@@ -284,58 +420,23 @@ public LoansData() {
 
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-    for (LoanModel loan : loans) {
-        Object[] rowData = {
-            loan.getLoanId(),
-            loan.getMemberName(),
-            loan.getBookTitle(),
-            loan.getCategoryName(),
-            loan.getAdminName(),
-            loan.getLoanDate(),
-            loan.getReturnDate(),
-            loan.getDueDate(),
-            loan.getFineAmount(),
-            loan.getStatus()
-        };
-        model.addRow(rowData);
+    for (LoanModel loan : currentLoans) {
+            Object[] rowData = {
+                loan.getLoanId(),
+                loan.getMemberName(),
+                loan.getBookTitle(),
+                loan.getCategoryName(),
+                loan.getAdminName(),
+                loan.getLoanDate(),
+                loan.getReturnDate(),
+                loan.getDueDate(),
+                loan.getFineAmount(),
+                loan.getStatus()
+            };
+            model.addRow(rowData);
     }
-
     jTable1.setModel(model);
-}
-    
-private void updateSelectedLoanStatus() {
-    int selectedRow = jTable1.getSelectedRow();
 
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Please select a loan record first.");
-        return;
-    }
-
-    int loanId = (int) jTable1.getValueAt(selectedRow, 0); // Kolom 0 = Loan ID
-    String currentStatus = (String) jTable1.getValueAt(selectedRow, 9); // Kolom 9 = Status
-
-    String[] statusOptions = {"Borrowed", "Returned", "Overdue"};
-    String newStatus = (String) JOptionPane.showInputDialog(
-        this,
-        "Update Loan Status:",
-        "Edit Status",
-        JOptionPane.PLAIN_MESSAGE,
-        null,
-        statusOptions,
-        currentStatus
-    );
-
-    if (newStatus != null && !newStatus.equals(currentStatus)) {
-        LoanController controller = new LoanController();
-        boolean success = controller.updateLoanStatus(loanId, newStatus);
-
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Loan status updated successfully.");
-            loadLoansData(); // Refresh tabel
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to update loan status.");
-        }
-    }
 }
 
 
@@ -374,9 +475,13 @@ private void updateSelectedLoanStatus() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
