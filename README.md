@@ -158,22 +158,15 @@ INSERT INTO books (title, author, publisher, year_published, isbn, category_id, 
 ```
 
 ### 4. Configure Database Connection
-
-Edit `src/main/resources/db.properties`:
-
-```properties
 db.url=jdbc:mysql://localhost:3306/library_management
 db.username=root
 db.password=your_password
 
 ### 5. Build & Run
-
-```bash
 mvn clean install
 mvn exec:java -Dexec.mainClass="com.library.management.Main"
 
 ## 👨‍💻 Author
-
 Developed by: **I Putu Sutha Satyawan**
 Course: **Object-Oriented Programming (OOP)**
 Institution: **Krisnadwipayan University**
