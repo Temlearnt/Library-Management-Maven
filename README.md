@@ -159,7 +159,7 @@ INSERT INTO books (title, author, publisher, year_published, isbn, category_id, 
 
 ### 4. Configure Database Connection
 ```
-db.url=jdbc:mysql://localhost:3306/library_managemen
+db.url=jdbc:mysql://localhost:3306/library_management
 db.username=root
 db.password=your_password
 ```
