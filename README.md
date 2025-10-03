@@ -14,35 +14,12 @@ The system provides two types of users with distinct roles:
   - Manage book loans and returns for Members
   - Track overdue books and calculate fines
 
-
 ## 🛠️ Tech Stack
 - **Java 11+**
 - **Maven**
 - **MySQL**
 - **JDBC**
 - **HTML/CSS (Optional UI Layer)**
-
-
-## 📂 Project Structure (Maven)
-
-
-library-management/
-│── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── com.library.management/
-│   │   │       ├── Main.java
-│   │   │       ├── controllers/
-│   │   │       ├── models/
-│   │   │       ├── services/
-│   │   │       └── utils/
-│   │   └── resources/
-│   │       └── db.properties
-│   └── test/
-│       └── java/
-│── pom.xml
-
-````
 
 ## 🗄️ Database Schema (MySQL)
 
@@ -201,7 +178,3 @@ Developed by: **I Putu Sutha Satyawan**
 Course: **Object-Oriented Programming (OOP)**
 Institution: **Krisnadwipayan University**
 
-
-
-Apakah mau saya bikinkan juga **contoh struktur class Java** (misalnya `Admin`, `Staff`, `Member`, `Book`, `Loan`) biar README ini makin lengkap sebagai dokumentasi PBO?
-```
