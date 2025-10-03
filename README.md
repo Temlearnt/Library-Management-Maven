@@ -15,11 +15,10 @@ The system provides two types of users with distinct roles:
   - Track overdue books and calculate fines
 
 ## 🛠️ Tech Stack
-- **Java 11+**
+- **Java 17+**
 - **Maven**
 - **MySQL**
 - **JDBC**
-- **HTML/CSS (Optional UI Layer)**
 
 ## 🗄️ Database Schema (MySQL)
 
