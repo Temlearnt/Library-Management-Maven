@@ -168,6 +168,4 @@ mvn exec:java -Dexec.mainClass="com.library.management.Main"
 
 ## 👨‍💻 Author
 Developed by: **I Putu Sutha Satyawan**
-Course: **Object-Oriented Programming (OOP)**
-Institution: **Krisnadwipayan University**
 
